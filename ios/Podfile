@@ -18,6 +18,11 @@ target 'rockeathelp' do
   # Flags change depending on the env values.
   flags = get_default_flags()
 
+  pod 'Firebase', :modular_headers => true
+  pod 'FirebaseCore', :modular_headers => true
+  pod 'GoogleUtilities', :modular_headers => true
+  $RNFirebaseAsStaticFramework = true
+
   use_react_native!(
     :path => config[:reactNativePath],
     :hermes_enabled => flags[:hermes_enabled] || podfile_properties['expo.jsEngine'] == 'hermes',
@@ -26,12 +31,14 @@ target 'rockeathelp' do
     :app_path => "#{Dir.pwd}/.."
   )
 
+
   # Uncomment to opt-in to using Flipper
   # Note that if you have use_frameworks! enabled, Flipper will not work
   #
   # if !ENV['CI']
   #   use_flipper!()
   # end
+  use_flipper!()
 
   post_install do |installer|
     react_native_post_install(installer)
